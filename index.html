@@ -10,13 +10,16 @@
     />
 
     <style>
-        dd {
-            /* text-align: center; */
-        }
+      .order > dl > dt {
+        font-weight: bold;
+        margin-top: 1.2em;
+        margin-bottom: 0.2em;
+      }
 
-        dt{
-            text-align: center;
-        }
+      .order > dl > dd {
+        margin-inline-start: 0px;
+        font-weight: 200;
+      }
     </style>
   </head>
   <body>
@@ -75,15 +78,15 @@
         </ul>
       </nav>
 
-      <article>
+      <article class="orders-article">
         <header>
           <hgroup>
-            <h1>Page Orders</h1>
-            <h2>What you want Friend?</h2>
+            <h1>Orders</h1>
+            <h2>See Recent Orders Below</h2>
           </hgroup>
         </header>
 
-        <div class="grid" class="order">
+        <section class="grid order">
           <dl>
             <dt>Order Number :</dt>
             <dd>10271</dd>
@@ -102,18 +105,27 @@
             <dt>Region :</dt>
             <dd>WY, USA</dd>
           </dl>
-        </div>
+        </section>
       </article>
     </main>
     <script>
       "use script";
+      const ordersArticle = document.querySelector("#orders-article")
       const ordersUrl =
         "http://localhost:4000/orders?_page=1&_limit=5&_expand=customer&_expand=employee";
       fetch(ordersUrl)
         .then((response) => response.json())
-        .then((data) => {
-          console.log(data);
+        .then((orders) => {
+          console.log(orders);
+          orders.forEach(buildOrderSection);
         });
+
+        function buildOrderSection(order){
+            let section = document.createElement("section");
+            section.innerText = order.id;
+            ordersArticle.appendChild(section);
+        }
+
     </script>
   </body>
 </html>
